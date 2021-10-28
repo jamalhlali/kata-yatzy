@@ -121,8 +121,8 @@ public class Yatzy implements IYatzy {
     }
 
     @Override
-    public int score(Category category) {
-        return category.score(this);
+    public int calculate(Score score) {
+        return score.apply(this);
     }
 
     private int xOfKind(int value) {

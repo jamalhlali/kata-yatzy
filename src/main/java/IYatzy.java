@@ -29,6 +29,6 @@ public interface IYatzy {
 
     int fullHouse();
 
-    int score(Category category);
+    int calculate(Score score);
 }
 

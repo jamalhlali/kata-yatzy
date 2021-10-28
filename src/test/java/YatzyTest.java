@@ -164,8 +164,8 @@ public class YatzyTest {
 
     @Test
     public void score() {
-        assertEquals(18, new Yatzy(6, 2, 2, 2, 6).score(Category.FULLHOUSE));
-        assertEquals(20, new Yatzy(2, 3, 4, 5, 6).score(Category.LARGESTRAIGHT));
+        assertEquals(18, new Yatzy(6, 2, 2, 2, 6).calculate(Yatzy::fullHouse));
+        assertEquals(20, new Yatzy(2, 3, 4, 5, 6).calculate(Yatzy::largeStraight));
     }
 
     @Test
