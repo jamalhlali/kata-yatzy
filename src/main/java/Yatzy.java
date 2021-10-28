@@ -1,14 +1,22 @@
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+
 public class Yatzy implements IYatzy {
 
     private List<Integer> dices;
 
     public Yatzy(Integer... elements) {
+        if (elements.length > 6) {
+            throw new IllegalArgumentException("dices must not exceed 6 items");
+        }
+        if (Arrays.stream(elements).anyMatch(e -> e.intValue() > 6)) {
+            throw new IllegalArgumentException("dice must not exceed 6");
+        }
         dices = List.of(elements);
     }
 
@@ -57,12 +65,7 @@ public class Yatzy implements IYatzy {
 
     @Override
     public int pair() {
-        try {
-            return xOfKind(2);
-        } catch (NoSuchElementException e) {
-            return 0;
-        }
-
+        return xOfKind(2);
     }
 
     @Override
@@ -83,22 +86,12 @@ public class Yatzy implements IYatzy {
 
     @Override
     public int threeOfAKind() {
-        try {
-            return xOfKind(3);
-        } catch (NoSuchElementException e) {
-            return 0;
-        }
-
+        return xOfKind(3);
     }
 
     @Override
     public int fourOfAKind() {
-        try {
-            return xOfKind(4);
-        } catch (NoSuchElementException e) {
-            return 0;
-        }
-
+        return xOfKind(4);
     }
 
     @Override
@@ -132,9 +125,13 @@ public class Yatzy implements IYatzy {
         return category.score(this);
     }
 
-    private int xOfKind(int value) throws NoSuchElementException {
-        Map<Integer, Integer> dicesToMapElementValue = dicesToMapElementValue();
-        return dicesToMapElementValue.entrySet().stream().filter(e -> e.getValue() >= value).max(Map.Entry.comparingByKey()).get().getKey() * value;
+    private int xOfKind(int value) {
+        try {
+            Map<Integer, Integer> dicesToMapElementValue = dicesToMapElementValue();
+            return dicesToMapElementValue.entrySet().stream().filter(e -> e.getValue() >= value).max(Map.Entry.comparingByKey()).get().getKey() * value;
+        } catch (NoSuchElementException e) {
+            return 0;
+        }
     }
 
     private boolean xOfStraight(int value) {

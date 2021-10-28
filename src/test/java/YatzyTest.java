@@ -4,6 +4,7 @@ import org.junit.jupiter.params.aggregator.AggregateWith;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
 
 public class YatzyTest {
@@ -165,5 +166,19 @@ public class YatzyTest {
     public void score() {
         assertEquals(18, new Yatzy(6, 2, 2, 2, 6).score(Category.FULLHOUSE));
         assertEquals(20, new Yatzy(2, 3, 4, 5, 6).score(Category.LARGESTRAIGHT));
+    }
+
+    @Test
+    void dicesMustNotExceedSixItems() {
+        assertThrowsExactly(IllegalArgumentException.class, () -> {
+            new Yatzy(1, 2, 2, 2, 6, 3, 8);
+        });
+    }
+
+    @Test
+    void diceMustNotExceedSix() {
+        assertThrowsExactly(IllegalArgumentException.class, () -> {
+            new Yatzy(7, 2, 2, 2, 3);
+        });
     }
 }
