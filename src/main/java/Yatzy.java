@@ -17,6 +17,9 @@ public class Yatzy implements IYatzy {
         if (Arrays.stream(elements).anyMatch(e -> e.intValue() > 6)) {
             throw new IllegalArgumentException("dice must not exceed 6");
         }
+        if (Arrays.stream(elements).anyMatch(e -> e.intValue() < 0)) {
+            throw new IllegalArgumentException("dice must not negative");
+        }
         dices = List.of(elements);
     }
 

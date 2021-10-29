@@ -150,7 +150,7 @@ public class YatzyTest {
             "0, 1, 2, 2, 4, 5"
     })
     public void largeStraight(@AggregateWith(YatzyAggregator.class) YatzyAggregator.YatzyTestCase yatzyTestCase) {
-        assertEquals(yatzyTestCase.getExpected(), yatzyTestCase.getYatzy().largeStraight());
+        assertEquals(yatzyTestCase.getExpected(), yatzyTestCase.getYatzy().calculate(Yatzy::largeStraight));
     }
 
     @ParameterizedTest
@@ -159,7 +159,7 @@ public class YatzyTest {
             "0, 2, 3, 4, 5, 6"
     })
     public void fullHouse(@AggregateWith(YatzyAggregator.class) YatzyAggregator.YatzyTestCase yatzyTestCase) {
-        assertEquals(yatzyTestCase.getExpected(), yatzyTestCase.getYatzy().fullHouse());
+        assertEquals(yatzyTestCase.getExpected(), yatzyTestCase.getYatzy().calculate(Yatzy::fullHouse));
     }
 
     @Test
@@ -179,6 +179,13 @@ public class YatzyTest {
     void diceMustNotExceedSix() {
         assertThrowsExactly(IllegalArgumentException.class, () -> {
             new Yatzy(7, 2, 2, 2, 3);
+        });
+    }
+
+    @Test
+    void diceMustNotNegative() {
+        assertThrowsExactly(IllegalArgumentException.class, () -> {
+            new Yatzy(-1, 2, 2, 2, 3);
         });
     }
 }
